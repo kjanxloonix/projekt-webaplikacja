@@ -1,13 +1,17 @@
 # Dokumentacja
+1. Przygotowanie środowiska:
+```
+sudo mkdir -p /opt/bitnami/projects && \
+sudo chown -R $USER /opt/bitnami/projects && \
+git clone git@github.com:kjanxloonix/projekt-webaplikacja.git /opt/bitnami/projects
+```
+2. Uruchamianie serwera domyślnie:
 
-Klonowanie repo (w katalogu domyślnym):
-`git clone git@github.com:kjanxloonix/projekt-webaplikacja.git`
+`python /opt/bitnami/projects/website/manage.py runserver`
 
-Uruchamianie serwera domyślnie:
-`python projekt-webaplikacja/website/manage.py runserver`
+Projekt jest importowany do ścieżki `/opt/bitnami/projects`.
 
 ## TODO
-- Wystawianie serwera "na zewnątrz"
+- Wystawianie serwera "na zewnątrz" - w dokumentacji bitnami
 - Implementacja template z [linka](https://djangocentral.com/building-a-blog-application-with-django/)
-- Skrypt bash do zmian w systemie?
-# projekt-webaplikacja
+- **Skrypt bash do zmian w systemie?**
