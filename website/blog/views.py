@@ -9,10 +9,7 @@ from .forms import CommentForm
 class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'index.html'
-
-#class PostDetail(generic.DetailView):
-#    model = Post
-#    template_name = 'post_detail.html'
+    paginate_by = 4
 
 def post_detail(request, slug):
     template_name = "post_detail.html"
