@@ -47,7 +47,8 @@ sudo /opt/bitnami/ctlscript.sh restart apache
 sudo chmod +x /opt/bitnami/projects/scripts/virt-hosts.sh
 /opt/bitnami/projects/scripts/virt-hosts.sh
 ```
-4. Skrypty dla baz danych **(ważne)**
+4. Skrypty dla baz danych **(ważne)**:
+
 Implementacja bazy danych opiera się o domyślne dane logowania do PostgreSQL, żeby dodać swoje domyślne hasło należy użyć skryptu:
 ```
 sudo chmod +x /opt/bitnami/projects/scripts/set-pass.sh
