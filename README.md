@@ -44,18 +44,18 @@ sudo /opt/bitnami/ctlscript.sh restart apache
 ```
 3. Implementacja Apache Virtual Hosts:
 ```
-sudo chmod +x /opt/bitnami/projects/scripts/virt-hosts.sh
+sudo chmod +x /opt/bitnami/projects/scripts/virt-hosts.sh && \
 /opt/bitnami/projects/scripts/virt-hosts.sh
 ```
 4. Skrypty dla baz danych **(ważne)**:
 
 Implementacja bazy danych opiera się o domyślne dane logowania do PostgreSQL, żeby dodać swoje domyślne hasło należy użyć skryptu:
 ```
-sudo chmod +x /opt/bitnami/projects/scripts/set-pass.sh
-/opt/bitnami/scripts/set-pass.sh
+sudo chmod +x /opt/bitnami/projects/scripts/set-pass.sh && \
+/opt/bitnami/projects/scripts/set-pass.sh
 ```
 Przed przesłaniem zmian najlepiej cofnąć zmianę:
 ```
-sudo chmod +x /opt/bitnami/projects/scripts/revert-pass.sh
-/opt/bitnami/scripts/revert-pass.sh
+sudo chmod +x /opt/bitnami/projects/scripts/revert-pass.sh && \
+/opt/bitnami/projects/scripts/revert-pass.sh
 ```
