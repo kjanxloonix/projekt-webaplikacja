@@ -15,13 +15,14 @@ Następnym celem było wstępne skonfigurowane podstawowych aspektów bloga oraz
 - [X] Podstawowy system komentarzy
 - [X] Podstawowa nawigacja
 - [X] Migracja z SQLite do PostgreSQL
+- [X] Kopia zapasowa bazy danych
 - [X] Plik .gitignore
 - [ ] Skrypt bash do zmian w systemie
 	- [X] Skrypt do Apache VH
 	- [X] Skrypty obsługi hasła w settings.py 
 - [ ] Implementacja użytkowników
 - [ ] Skany bezpieczeństwa
-- --
+---
 
 
 ## Przygotowanie środowiska
@@ -30,6 +31,7 @@ Następnym celem było wstępne skonfigurowane podstawowych aspektów bloga oraz
 ```
 sudo mkdir -p /opt/bitnami/projects && \
 sudo chown -R $USER /opt/bitnami/projects && \
+sudo chgrp -R $USER /opt/bitnami/projects && \
 git clone git@github.com:kjanxloonix/projekt-webaplikacja.git /opt/bitnami/projects
 ```
 2. Uruchamianie serwera domyślnie (testowo):
@@ -58,4 +60,24 @@ Przed przesłaniem zmian najlepiej cofnąć zmianę:
 ```
 sudo chmod +x /opt/bitnami/projects/scripts/revert-pass.sh && \
 /opt/bitnami/projects/scripts/revert-pass.sh
+```
+5. Kopiowanie bazy danych:
+
+Drop istniejących tabel (w psql):
+```
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
+```
+
+Odczyt z pliku dump:
+```
+psql -U postgres -f /opt/bitnami/projects/db/db.sql
+```
+
+Zrzut pliku dump:
+```
+sudo -u postgres pg_dump postgres > /opt/bitnami/projects/db/db.sql
 ```
