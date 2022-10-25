@@ -20,8 +20,10 @@ Następnym celem było wstępne skonfigurowane podstawowych aspektów bloga oraz
 - [ ] Skrypt bash do zmian w systemie
 	- [X] Skrypt do Apache VH
 	- [X] Skrypty obsługi hasła w settings.py 
+	- [X] Skrypty kopiowania i wczytywania bazy danych
 - [ ] Implementacja użytkowników
 - [ ] Skany bezpieczeństwa
+	- [X] 24.10.2022
 ---
 
 
@@ -61,23 +63,15 @@ Przed przesłaniem zmian najlepiej cofnąć zmianę:
 sudo chmod +x /opt/bitnami/projects/scripts/revert-pass.sh && \
 /opt/bitnami/projects/scripts/revert-pass.sh
 ```
-5. Kopiowanie bazy danych:
+5. Obsługa bazy danych:
 
-Drop istniejących tabel (w psql):
+Odczytywanie bazy danych z pliku dump:
 ```
-DROP SCHEMA public CASCADE;
-CREATE SCHEMA public;
-
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO public;
+chmod +x /opt/bitnami/projects/scripts/init-db.sh && \
+/opt/bitnami/projects/scripts/init-db.sh
 ```
-
-Odczyt z pliku dump:
+Zrzut bazy danych do pliku dump:
 ```
-psql -U postgres -f /opt/bitnami/projects/db/db.sql
-```
-
-Zrzut pliku dump:
-```
-sudo -u postgres pg_dump postgres > /opt/bitnami/projects/db/db.sql
+chmod +x /opt/bitnami/projects/scripts/dump-db.sh && \
+/opt/bitnami/projects/scripts/dump-db.sh
 ```
