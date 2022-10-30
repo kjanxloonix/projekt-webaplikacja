@@ -427,9 +427,10 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$260000$5kAgQ6RySgq6bdhFaD1Lih$X+Oi/XRqDf35p8WvpRDTNL9464IqogXoNwVTZxHZ8ws=	2022-10-30 20:16:34.437765+00	t	webadmin			252987@student.pwr.edu.pl	t	t	2022-10-20 10:05:32.140793+00
 4	pbkdf2_sha256$260000$3ZnmoFuHtFCMyr10JrBrjF$rJjI4mtkoy9UM6G2t1P8HhT5hroxVwJPTJTTQWtJbDA=	2022-10-30 20:19:53.34495+00	f	moderator	John	Doe	email@example.com	t	t	2022-10-30 20:05:29+00
 3	pbkdf2_sha256$260000$ZmAjfzerjXcmX44vc9Vpty$t+JbcIM6q4Ow2L7Wyag6G5QuiThdYlwb7aM/igfNH18=	2022-10-30 20:21:41.360788+00	f	Krzysztof	Krzysztof	Jakubiec	253001@student.pwr.edu.pl	t	t	2022-10-25 10:56:54+00
+1	pbkdf2_sha256$390000$DHe53Z51SumaIZhQausyA8$/BdqtJ3c+B1rdoiV2edCy6uJFqKry+NTunhofwqd57s=	2022-10-30 21:49:10.779463+00	t	webadmin			252987@student.pwr.edu.pl	t	t	2022-10-20 10:05:32.140793+00
+5	pbkdf2_sha256$390000$o15RKTmnwwAbHxCrLzrh7K$T/qiLhqE329kkWJm8WJfjrvdHMstL1uBL0UFLWdntmw=	\N	f	Tomasz	Tomasz	Słowik	252987@student.pwr.edu.pl	t	t	2022-10-30 21:51:34+00
 \.
 
 
@@ -440,6 +441,7 @@ COPY public.auth_user (id, password, last_login, is_superuser, username, first_n
 COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 1	3	2
 2	4	1
+3	5	2
 \.
 
 
@@ -497,6 +499,8 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 22	2022-10-30 20:18:17.606329+00	1	moderation	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
 23	2022-10-30 20:18:50.747616+00	2	users	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
 24	2022-10-30 20:20:53.485286+00	4	Comment Witamy serdecznie, przypominamy o kulturze osobistej w komentarzach! by moderator	1	[{"added": {}}]	8	4
+25	2022-10-30 21:51:34.596027+00	5	Tomasz	1	[{"added": {}}]	4	1
+26	2022-10-30 21:52:52.581668+00	5	Tomasz	2	[{"changed": {"fields": ["First name", "Last name", "Email address", "Staff status", "Groups"]}}]	4	1
 \.
 
 
@@ -550,6 +554,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 0r293fa618xt7obzqflb8g0hm04ki91k	.eJxVjEEOwiAQRe_C2hBoZaAu3fcMZGBmpGpoUtqV8e7apAvd_vfef6mI21ri1niJE6mLsur0uyXMD647oDvW26zzXNdlSnpX9EGbHmfi5_Vw_w4KtvKtjRksZSAnzjME67okVkCMZxuYUvYOzhQEexbrDWAvDiih6wYfIHn1_gDpWzgX:1olSax:Ya3hCYpeb0bi39o-A7urYSQbnSN8QL4QlyNHa646uaE	2022-11-03 10:16:11.173609+00
+djkjbklkbbvltmh7tg1nwbpcjtdjdhyq	.eJxVjDsOwjAQBe_iGllO_MtS0ucM1nq9xgHkSHFSIe5OIqWA9s3Me4uA21rC1ngJUxJX0YnL7xaRnlwPkB5Y77Okua7LFOWhyJM2Oc6JX7fT_Tso2Mpe2yHmDEBExlrvwXmOCA5BaefBG2V03EFv2TJHAuqUGbIGpUi7HlB8vtc0Nzc:1opGB4:84p4EKEuHB3yXHScFI3pP25AXGddi4mvs-fwND7hl_E	2022-11-13 21:49:10.781301+00
 \.
 
 
@@ -578,14 +583,14 @@ SELECT pg_catalog.setval('public.auth_permission_id_seq', 32, true);
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 2, true);
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 3, true);
 
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_user_id_seq', 4, true);
+SELECT pg_catalog.setval('public.auth_user_id_seq', 5, true);
 
 
 --
@@ -613,7 +618,7 @@ SELECT pg_catalog.setval('public.blog_post_id_seq', 2, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 24, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 26, true);
 
 
 --
