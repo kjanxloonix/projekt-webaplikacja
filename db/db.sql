@@ -359,6 +359,8 @@ ALTER TABLE public.django_session OWNER TO postgres;
 --
 
 COPY public.auth_group (id, name) FROM stdin;
+1	moderation
+2	users
 \.
 
 
@@ -367,6 +369,16 @@ COPY public.auth_group (id, name) FROM stdin;
 --
 
 COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+1	1	32
+4	1	29
+5	1	30
+6	1	31
+7	2	32
+9	2	25
+10	2	26
+12	2	28
+13	1	27
+14	1	28
 \.
 
 
@@ -415,8 +427,9 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-2	pbkdf2_sha256$390000$UtPefOf3KBFczLUgCttqn8$NhFkfhvy5UCXm/t6cnn3xQguh+amc36ReN33n/VUdLo=	2022-10-20 10:12:05.610494+00	f	user				t	t	2022-10-20 10:09:27+00
-1	pbkdf2_sha256$390000$OnGVEvHt4DTkNHc87RX1Kj$XhB1xu15Sjj600IsSY8lOQgBmV/qaOng62iy9/QTcpw=	2022-10-20 10:16:11.167919+00	t	webadmin			252987@student.pwr.edu.pl	t	t	2022-10-20 10:05:32.140793+00
+1	pbkdf2_sha256$260000$5kAgQ6RySgq6bdhFaD1Lih$X+Oi/XRqDf35p8WvpRDTNL9464IqogXoNwVTZxHZ8ws=	2022-10-30 20:16:34.437765+00	t	webadmin			252987@student.pwr.edu.pl	t	t	2022-10-20 10:05:32.140793+00
+4	pbkdf2_sha256$260000$3ZnmoFuHtFCMyr10JrBrjF$rJjI4mtkoy9UM6G2t1P8HhT5hroxVwJPTJTTQWtJbDA=	2022-10-30 20:19:53.34495+00	f	moderator	John	Doe	email@example.com	t	t	2022-10-30 20:05:29+00
+3	pbkdf2_sha256$260000$ZmAjfzerjXcmX44vc9Vpty$t+JbcIM6q4Ow2L7Wyag6G5QuiThdYlwb7aM/igfNH18=	2022-10-30 20:21:41.360788+00	f	Krzysztof	Krzysztof	Jakubiec	253001@student.pwr.edu.pl	t	t	2022-10-25 10:56:54+00
 \.
 
 
@@ -425,6 +438,8 @@ COPY public.auth_user (id, password, last_login, is_superuser, username, first_n
 --
 
 COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+1	3	2
+2	4	1
 \.
 
 
@@ -433,14 +448,6 @@ COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 --
 
 COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
-1	2	32
-2	2	25
-3	2	26
-4	2	27
-5	2	28
-6	2	29
-7	2	30
-8	2	31
 \.
 
 
@@ -449,7 +456,8 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 --
 
 COPY public.blog_comment (id, name, email, body, created_on, active, post_id) FROM stdin;
-1	user12	slowik.tomasz@wp.pl	No i co?	2022-10-20 10:13:59.653326+00	t	1
+3	Gość	example@mail.com	Fenomenalny blog!	2022-10-30 20:15:48.776482+00	t	2
+4	moderator	example@mail.com	Witamy serdecznie, przypominamy o kulturze osobistej w komentarzach!	2022-10-30 20:20:53.484383+00	t	2
 \.
 
 
@@ -458,7 +466,7 @@ COPY public.blog_comment (id, name, email, body, created_on, active, post_id) FR
 --
 
 COPY public.blog_post (id, title, slug, updated_on, content, created_on, status, author_id) FROM stdin;
-1	Lorem ipsum	lorem-ipsum	2022-10-20 10:13:17.322585+00	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\nCokolwiek	2022-10-20 10:13:17.322653+00	1	1
+2	Witamy na blogu!	witamy-na-blogu	2022-10-30 20:14:40.333731+00	Nieniejszy blog dotyczyć będzie problematyki cyberbezpieczeństwa i wzorowany jest na popularnym blogu: <a href="https://sekurak.pl/l">sekurak</a>. Miłego czytania!	2022-10-30 20:14:27.71161+00	1	3
 \.
 
 
@@ -469,9 +477,26 @@ COPY public.blog_post (id, title, slug, updated_on, content, created_on, status,
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
 1	2022-10-20 10:09:28.039252+00	2	user	1	[{"added": {}}]	4	1
 2	2022-10-20 10:11:50.422822+00	2	user	2	[{"changed": {"fields": ["Staff status", "User permissions"]}}]	4	1
-3	2022-10-20 10:13:17.324622+00	1	Lorem ipsum	1	[{"added": {}}]	7	2
-4	2022-10-20 10:13:59.656148+00	1	Comment No i co? by user12	1	[{"added": {}}]	8	2
 5	2022-10-20 10:17:12.011305+00	2	Comment nowy komentarz by nowy	3		8	1
+6	2022-10-25 10:56:55.062897+00	3	Krzysztof	1	[{"added": {}}]	4	1
+7	2022-10-25 10:58:50.534053+00	3	Krzysztof	2	[{"changed": {"fields": ["Staff status", "User permissions"]}}]	4	1
+8	2022-10-30 20:02:56.377119+00	2	user	3		4	1
+9	2022-10-30 20:04:05.879369+00	3	Krzysztof	2	[{"changed": {"fields": ["First name", "Last name", "Email address"]}}]	4	1
+10	2022-10-30 20:05:29.966271+00	4	moderator	1	[{"added": {}}]	4	1
+11	2022-10-30 20:06:09.666514+00	4	moderator	2	[{"changed": {"fields": ["First name", "Last name", "Email address", "Staff status"]}}]	4	1
+12	2022-10-30 20:06:12.312013+00	4	moderator	2	[]	4	1
+13	2022-10-30 20:07:49.296298+00	1	moderation	1	[{"added": {}}]	3	1
+14	2022-10-30 20:08:41.235018+00	2	users	1	[{"added": {}}]	3	1
+15	2022-10-30 20:08:54.402148+00	3	Krzysztof	2	[{"changed": {"fields": ["Groups", "User permissions"]}}]	4	1
+16	2022-10-30 20:09:04.90057+00	4	moderator	2	[{"changed": {"fields": ["Groups"]}}]	4	1
+17	2022-10-30 20:09:48.183081+00	1	Comment No i co? by user12	3		8	4
+18	2022-10-30 20:11:36.961343+00	3	Krzysztof	2	[{"changed": {"fields": ["password"]}}]	4	1
+19	2022-10-30 20:12:15.393207+00	1	Lorem ipsum	3		7	3
+20	2022-10-30 20:14:27.715318+00	2	Witamy na blogu!	1	[{"added": {}}]	7	3
+21	2022-10-30 20:14:40.335989+00	2	Witamy na blogu!	2	[{"changed": {"fields": ["Status"]}}]	7	3
+22	2022-10-30 20:18:17.606329+00	1	moderation	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+23	2022-10-30 20:18:50.747616+00	2	users	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+24	2022-10-30 20:20:53.485286+00	4	Comment Witamy serdecznie, przypominamy o kulturze osobistej w komentarzach! by moderator	1	[{"added": {}}]	8	4
 \.
 
 
@@ -532,14 +557,14 @@ COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 -- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auth_group_id_seq', 2, true);
 
 
 --
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 14, true);
 
 
 --
@@ -553,42 +578,42 @@ SELECT pg_catalog.setval('public.auth_permission_id_seq', 32, true);
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 2, true);
 
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_user_id_seq', 2, true);
+SELECT pg_catalog.setval('public.auth_user_id_seq', 4, true);
 
 
 --
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 8, true);
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 13, true);
 
 
 --
 -- Name: blog_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.blog_comment_id_seq', 2, true);
+SELECT pg_catalog.setval('public.blog_comment_id_seq', 4, true);
 
 
 --
 -- Name: blog_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.blog_post_id_seq', 1, true);
+SELECT pg_catalog.setval('public.blog_post_id_seq', 2, true);
 
 
 --
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 5, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 24, true);
 
 
 --
@@ -978,6 +1003,13 @@ ALTER TABLE ONLY public.django_admin_log
 
 ALTER TABLE ONLY public.django_admin_log
     ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
